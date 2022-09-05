@@ -67,6 +67,7 @@ class Form extends Component {
         />
         <label htmlFor="rare">
           <select
+            name="cardRare"
             data-testid="rare-input"
             id="rare"
             value={ cardRare }
