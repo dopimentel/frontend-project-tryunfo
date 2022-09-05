@@ -13,13 +13,25 @@ class App extends React.Component {
     cardRare: '',
     cardTrunfo: false,
     hasTrunfo: false,
-    isSaveButtonDisabled: false,
+    isSaveButtonDisabled: true,
   };
 
   onInputChange = ({ target }) => {
     const { name } = target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
-    this.setState({ [name]: value });
+    this.setState({ [name]: value }, () => { this.enableButtonSave(); });
+  };
+
+  enableButtonSave = () => {
+    const { cardName, cardDescription, cardImage, cardRare } = this.state;
+    const emptyFields = [
+      !cardName.length,
+      !cardDescription.length,
+      !cardImage.length,
+      !cardRare.length,
+    ];
+    const desable = emptyFields.every((field) => field !== true);
+    this.setState({ isSaveButtonDisabled: !desable });
   };
 
   render() {
