@@ -22,13 +22,15 @@ class Form extends Component {
     return (
       <form>
         <Input
-          name={ cardName }
+          name="cardName"
+          card={ cardName }
           type="text"
           dataTestId="name-input"
           onInputChange={ onInputChange }
         />
         <label htmlFor="description">
           <textarea
+            name="cardDescription"
             value={ cardDescription }
             id="description"
             data-testid="description-input"
@@ -36,25 +38,29 @@ class Form extends Component {
           />
         </label>
         <Input
-          name={ cardAttr1 }
+          name="cardAttr1"
+          card={ cardAttr1 }
           type="number"
           dataTestId="attr1-input"
           onInputChange={ onInputChange }
         />
         <Input
-          name={ cardAttr2 }
+          name="cardAttr2"
+          card={ cardAttr2 }
           type="number"
           dataTestId="attr2-input"
           onInputChange={ onInputChange }
         />
         <Input
-          name={ cardAttr3 }
+          name="cardAttr3"
+          card={ cardAttr3 }
           type="number"
           dataTestId="attr3-input"
           onInputChange={ onInputChange }
         />
         <Input
-          name={ cardImage }
+          name="cardImage"
+          card={ cardImage }
           type="text"
           dataTestId="image-input"
           onInputChange={ onInputChange }
@@ -72,7 +78,7 @@ class Form extends Component {
           </select>
         </label>
         <Input
-          name="trunfo"
+          name="cardTrunfo"
           type="checkbox"
           checked={ cardTrunfo }
           dataTestId="trunfo-input"
