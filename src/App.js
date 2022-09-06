@@ -79,7 +79,9 @@ class App extends React.Component {
       cardRare,
       cardTrunfo,
     };
-
+    if (cardTrunfo) {
+      this.setState({ hasTrunfo: true });
+    }
     cardList.push(newCard);
 
     this.setState({
@@ -90,7 +92,6 @@ class App extends React.Component {
       cardAttr3: 0,
       cardImage: '',
       cardRare: 'normal',
-      hasTrunfo: true,
     }, () => { this.enableButtonSave(); });
   };
 
@@ -134,6 +135,7 @@ class App extends React.Component {
           cardImage={ cardImage }
           cardRare={ cardRare }
           cardTrunfo={ cardTrunfo }
+          button={ false }
         />
         {cardList.map(({
           cardName: name,
@@ -154,6 +156,7 @@ class App extends React.Component {
           cardImage={ image }
           cardRare={ rare }
           cardTrunfo={ trunfo }
+          button
         />))}
       </div>
     );
