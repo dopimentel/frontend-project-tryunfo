@@ -1,6 +1,7 @@
 import React from 'react';
 import Form from './components/Form';
 import Card from './components/Card';
+import Input from './components/Input';
 
 class App extends React.Component {
   state = {
@@ -15,12 +16,13 @@ class App extends React.Component {
     hasTrunfo: false,
     isSaveButtonDisabled: true,
     cardList: [],
+    nameFilter: '',
   };
 
   onInputChange = ({ target }) => {
     const { name } = target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
-    this.setState({ [name]: value }, () => { this.enableButtonSave(); });
+    this.setState({ [name]: value }, () => { this.enableButtonSave(); }, () => {this.filterName()});
   };
 
   enableButtonSave = () => {
@@ -108,6 +110,14 @@ class App extends React.Component {
     );
   };
 
+  filterName = () => {
+    const { cardList, nameFilter } = this.state;
+    if (nameFilter === '') {
+      return cardList;
+    }
+    return cardList.filter((card) => card.cardName.includes(nameFilter));
+  };
+
   render() {
     const {
       cardName,
@@ -120,7 +130,6 @@ class App extends React.Component {
       cardTrunfo,
       hasTrunfo,
       isSaveButtonDisabled,
-      cardList,
     } = this.state;
     return (
       <div>
@@ -139,6 +148,13 @@ class App extends React.Component {
           onInputChange={ this.onInputChange }
           onSaveButtonClick={ this.onSaveButtonClick }
         />
+        <Input
+          name="nameFilter"
+          type="text"
+          dataTestId="name-filter"
+          onInputChange={ this.onInputChange }
+          // onChange={ this.onNameFilterChange }
+        />
         <Card
           cardName={ cardName }
           cardDescription={ cardDescription }
@@ -150,7 +166,7 @@ class App extends React.Component {
           cardTrunfo={ cardTrunfo }
           button={ false }
         />
-        {cardList.map(({
+        {this.filterName().map(({
           cardName: name,
           cardDescription: description,
           cardAttr1: attr1,
