@@ -92,7 +92,20 @@ class App extends React.Component {
       cardAttr3: 0,
       cardImage: '',
       cardRare: 'normal',
+      cardList,
     }, () => { this.enableButtonSave(); });
+  };
+
+  onButtonDeleteClick = (event) => {
+    const { cardList } = this.state;
+    const { cardTrunfo } = cardList[event.target.id];
+    if (cardTrunfo) {
+      this.setState({ hasTrunfo: false });
+    }
+    cardList.splice(event.target.id, 1);
+    this.setState(
+      { cardList },
+    );
   };
 
   render() {
@@ -146,7 +159,7 @@ class App extends React.Component {
           cardImage: image,
           cardRare: rare,
           cardTrunfo: trunfo,
-        }) => (<Card
+        }, index) => (<Card
           key={ name }
           cardName={ name }
           cardDescription={ description }
@@ -157,6 +170,8 @@ class App extends React.Component {
           cardRare={ rare }
           cardTrunfo={ trunfo }
           button
+          onButtonDeleteClick={ this.onButtonDeleteClick }
+          id={ index }
         />))}
       </div>
     );
