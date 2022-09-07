@@ -124,8 +124,12 @@ class App extends React.Component {
     if (rareFilter === 'todas') {
       return cardList.filter((card) => card.cardName.includes(nameFilter));
     }
-    return cardList
-      .filter((card) => card.cardRare === rareFilter)
+    if (rareFilter === 'raro') {
+      return cardList
+        .filter((card) => card.cardName.includes(nameFilter))
+        .filter((card) => card.cardRare === rareFilter);
+    }
+    return cardList.filter((card) => card.cardRare.includes(rareFilter))
       .filter((card) => card.cardName.includes(nameFilter));
   };
 
