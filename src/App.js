@@ -17,6 +17,7 @@ class App extends React.Component {
     isSaveButtonDisabled: true,
     cardList: [],
     nameFilter: '',
+    rareFilter: '',
   };
 
   onInputChange = ({ target }) => {
@@ -28,7 +29,7 @@ class App extends React.Component {
         this.enableButtonSave();
       },
       () => {
-        this.filterName();
+        this.getFilter();
       },
     );
   };
@@ -118,12 +119,14 @@ class App extends React.Component {
     );
   };
 
-  filterName = () => {
-    const { cardList, nameFilter } = this.state;
-    if (nameFilter === '') {
-      return cardList;
+  getFilter = () => {
+    const { cardList, nameFilter, rareFilter } = this.state;
+    if (rareFilter === 'todas') {
+      return cardList.filter((card) => card.cardName.includes(nameFilter));
     }
-    return cardList.filter((card) => card.cardName.includes(nameFilter));
+    return cardList
+      .filter((card) => card.cardRare === rareFilter)
+      .filter((card) => card.cardName.includes(nameFilter));
   };
 
   render() {
@@ -137,6 +140,7 @@ class App extends React.Component {
       cardRare,
       cardTrunfo,
       hasTrunfo,
+      rareFilter,
       isSaveButtonDisabled,
     } = this.state;
     return (
@@ -161,8 +165,21 @@ class App extends React.Component {
           type="text"
           dataTestId="name-filter"
           onInputChange={ this.onInputChange }
-          // onChange={ this.onNameFilterChange }
         />
+        <label htmlFor="rareFilter">
+          <select
+            name="rareFilter"
+            data-testid="rare-filter"
+            id="rareFilter"
+            value={ rareFilter }
+            onChange={ this.onInputChange }
+          >
+            <option>todas</option>
+            <option>normal</option>
+            <option>raro</option>
+            <option>muito raro</option>
+          </select>
+        </label>
         <Card
           cardName={ cardName }
           cardDescription={ cardDescription }
@@ -174,7 +191,7 @@ class App extends React.Component {
           cardTrunfo={ cardTrunfo }
           button={ false }
         />
-        {this.filterName().map(({
+        {this.getFilter().map(({
           cardName: name,
           cardDescription: description,
           cardAttr1: attr1,
